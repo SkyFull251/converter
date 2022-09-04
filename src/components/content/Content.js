@@ -14,13 +14,12 @@ const Content = () => {
         firstSelect: 'USD',
         secondSelect: 'USD'
     });
-    //const [currency2, setCurrency2] = useState(0);
     const { currencySecond, secondInput, firstInput } = useSelector(state => state.currency);
     const dispatch = useDispatch();
-    useEffect(()=> {
-        dispatch(secondInputChanged(firstInput* currencySecond));
+    useEffect(() => {
+        dispatch(secondInputChanged(firstInput * currencySecond));
         // eslint-disable-next-line
-    },[currencySecond]);
+    }, [currencySecond]);
 
     const { data, isLoading, isError } = useGetCurrencyQuery();
 
@@ -36,22 +35,18 @@ const Content = () => {
             for (let key in data.rates) {
                 if (key === e.target.value) {
                     dispatch(currencyChanged(data.rates[key]));
-                    //setCurrency2(data.rates[key]);
-                    //dispatch(secondInputChanged(firstInput * currencySecond));
                 }
             }
         }
         if (e.target.name === 'firstSelect') {
             for (let key in data.rates) {
                 if (key === e.target.value) {
-                    //e.target.value = usd k eur
-                    dispatch(currencyChanged(currencySecond/data.rates[key]));
+                    dispatch(currencyChanged(currencySecond / data.rates[key]));
                     dispatch(secondInputChanged(secondInput * currencySecond));
                 }
             }
         }
     }
-    console.log('render');
     const onChangeInput = (e) => {
         if (e.target.name === "firstInput") {
             dispatch(firstInputChanged(e.target.value))
